@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/core/">
+    <Project Path="core/iCamStudio.Core.csproj" />
+  </Folder>
+  <Folder Name="/desktop/">
+    <Project Path="desktop/iCamStudio.Desktop/iCamStudio.Desktop.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/core.Tests/">
+    <Project Path="tests/core.Tests/iCamStudio.Core.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/desktop.Tests/">
+    <Project Path="tests/desktop.Tests/iCamStudio.Desktop.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,57 @@
+name: CI
+
+# Roda em todo push e pull request. Não exige Mac próprio nem conta Apple.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: core (Linux, .NET 10)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Testes do core
+        run: dotnet test tests/core.Tests/iCamStudio.Core.Tests.csproj --configuration Release
+
+  desktop:
+    name: desktop (Windows, .NET 10)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Build do Desktop
+        run: dotnet build desktop/iCamStudio.Desktop/iCamStudio.Desktop.csproj --configuration Release
+      - name: Testes do Desktop (executam aqui, pela primeira vez, em Windows real)
+        run: dotnet test tests/desktop.Tests/iCamStudio.Desktop.Tests.csproj --configuration Release
+
+  ios:
+    name: iOS (macOS, Xcode, simulador)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar XcodeGen
+        run: brew install xcodegen
+      - name: Gerar projeto Xcode
+        working-directory: mobile
+        run: xcodegen generate
+      - name: Listar simuladores disponíveis (diagnóstico)
+        run: xcrun simctl list devices available | head -40
+      - name: Build e testes XCTest no simulador
+        working-directory: mobile
+        # Sem assinatura: o simulador não exige certificado.
+        run: |
+          xcodebuild test \
+            -project iCamStudioMobile.xcodeproj \
+            -scheme iCamStudioMobile \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            CODE_SIGNING_ALLOWED=NO

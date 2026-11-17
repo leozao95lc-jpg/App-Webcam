@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    iCamStudio.Core — contratos compartilhados entre o app Desktop (Windows) e,
+    por espelhamento documentado, o app Mobile (iOS).
+    Sem dependências externas: apenas BCL (System.Text.Json, System.Buffers.Binary).
+    Compila em Windows e Linux, o que permite rodar os testes neste ambiente.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>iCamStudio.Core</RootNamespace>
+    <AssemblyName>iCamStudio.Core</AssemblyName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

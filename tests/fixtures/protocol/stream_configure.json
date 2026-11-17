@@ -1,0 +1,1 @@
+{"v":1,"type":"stream_configure","id":"6f1c2b9e-1111-4a2b-9c3d-000000000004","ts":1763380000200,"payload":{"configuration":{"cameraId":"cam-back-wide","width":3840,"height":2160,"fps":30.0,"codec":"hevc","bitrateKbps":35000}}}

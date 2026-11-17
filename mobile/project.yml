@@ -1,0 +1,73 @@
+# Especificação do projeto Xcode para o XcodeGen (https://github.com/yonaskolb/XcodeGen).
+# Gerar o .xcodeproj SOMENTE em macOS com Xcode 16+:
+#   brew install xcodegen
+#   cd mobile && xcodegen generate
+# O .xcodeproj é gerado e não é versionado (ver .gitignore).
+#
+# ATENÇÃO: o bundle id abaixo é um placeholder. Troque antes de assinar no dispositivo.
+
+name: iCamStudioMobile
+
+options:
+  bundleIdPrefix: dev.icamstudio
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    SWIFT_STRICT_CONCURRENCY: complete
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+
+targets:
+  iCamStudioMobile:
+    type: application
+    platform: iOS
+    sources:
+      - path: iCamStudioMobile
+    info:
+      path: iCamStudioMobile/Info.plist
+      properties:
+        CFBundleDisplayName: iCam Studio
+        CFBundleShortVersionString: "0.1.0"
+        CFBundleVersion: "1"
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        # Câmera: permissão obrigatória para AVCaptureDevice.
+        NSCameraUsageDescription: "O iCam Studio usa a câmera para transmitir vídeo ao computador."
+        # Rede local: iOS 14+ exige esta permissão para descoberta e conexão na LAN.
+        NSLocalNetworkUsageDescription: "O iCam Studio encontra o computador na sua rede Wi-Fi para transmitir o vídeo."
+        # Serviço DNS-SD usado pelo Desktop. Deve bater com ProtocolConstants.ServiceType.
+        NSBonjourServices:
+          - _icamstudio._tcp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.icamstudio.mobile
+        GENERATE_INFOPLIST_FILE: NO
+        TARGETED_DEVICE_FAMILY: "1"
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+
+  iCamStudioMobileTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: iCamStudioMobileTests
+    dependencies:
+      - target: iCamStudioMobile
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.icamstudio.mobile.tests
+        GENERATE_INFOPLIST_FILE: YES
+
+# Esquema explícito: `xcodebuild test -scheme iCamStudioMobile` precisa incluir o alvo de testes.
+schemes:
+  iCamStudioMobile:
+    build:
+      targets:
+        iCamStudioMobile: all
+        iCamStudioMobileTests: [test]
+    test:
+      targets:
+        - iCamStudioMobileTests

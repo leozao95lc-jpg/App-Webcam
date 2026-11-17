@@ -1,0 +1,99 @@
+<Window x:Class="iCamStudio.Desktop.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="iCam Studio 4K"
+        Width="1280" Height="800" MinWidth="960" MinHeight="600">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Barra superior: identidade, indicador de conexão e ações principais -->
+        <Grid Grid.Row="0" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="iCam Studio 4K" FontSize="16" FontWeight="SemiBold" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Ellipse Width="9" Height="9" Margin="0,0,8,0" Fill="{StaticResource BrushTextMuted}" />
+                <TextBlock Text="{Binding ConnectionText}" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Content="Iniciar transmissão" Command="{Binding StartStreamCommand}" Margin="0,0,8,0" />
+                <Button Content="Interromper" Command="{Binding StopStreamCommand}" Margin="0,0,8,0" />
+                <Button Content="Câmera virtual" IsEnabled="False" ToolTip="Disponível após a Fase 4" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Área principal: controles à esquerda, preview ao centro, ajustes de lente à direita -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="240" />
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource Panel}" Margin="0,0,12,0">
+                <StackPanel>
+                    <TextBlock Text="CÂMERA E FORMATO" Style="{StaticResource MutedLabel}" Margin="0,0,0,8" />
+                    <TextBlock Style="{StaticResource MutedLabel}" Text="Câmera" />
+                    <ComboBox IsEnabled="False" ToolTip="Preenchido após o handshake com o iPhone" />
+                    <TextBlock Style="{StaticResource MutedLabel}" Text="Resolução" />
+                    <ComboBox IsEnabled="False" />
+                    <TextBlock Style="{StaticResource MutedLabel}" Text="FPS" />
+                    <ComboBox IsEnabled="False" />
+                    <TextBlock Style="{StaticResource MutedLabel}" Text="Codec" />
+                    <ComboBox IsEnabled="False" />
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource Panel}" Padding="0" Background="#FF05070A">
+                <Grid>
+                    <TextBlock Text="Aguardando conexão com o iPhone"
+                               Foreground="{StaticResource BrushTextMuted}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" />
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource Panel}" Margin="12,0,0,0">
+                <StackPanel>
+                    <TextBlock Text="LENTE" Style="{StaticResource MutedLabel}" Margin="0,0,0,8" />
+                    <TextBlock Style="{StaticResource MutedLabel}" Text="Zoom" />
+                    <Slider IsEnabled="False" Minimum="1" Maximum="10" Value="1" />
+                    <TextBlock Style="{StaticResource MutedLabel}" Text="Foco" />
+                    <Slider IsEnabled="False" Minimum="0" Maximum="1" Value="0.5" />
+                    <TextBlock Style="{StaticResource MutedLabel}" Text="Exposição (EV)" />
+                    <Slider IsEnabled="False" Minimum="-8" Maximum="8" Value="0" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Barra de status: telemetria. Mostra "—" até haver dados reais. -->
+        <Border Grid.Row="2" Style="{StaticResource Panel}" Margin="0,12,0,0" Padding="12,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding FpsText, StringFormat=FPS: {0}}" />
+                <TextBlock Grid.Column="1" Text="{Binding BitrateText, StringFormat=Bitrate: {0}}" />
+                <TextBlock Grid.Column="2" Text="{Binding LatencyText, StringFormat=Latência: {0}}" />
+                <TextBlock Grid.Column="3" Text="{Binding TemperatureText, StringFormat=Temperatura: {0}}" />
+                <TextBlock Grid.Column="4" Text="{Binding BatteryText, StringFormat=Bateria: {0}}" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

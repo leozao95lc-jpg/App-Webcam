@@ -1,0 +1,33 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+*.binlog
+
+# Xcode / iOS (o .xcodeproj é gerado por XcodeGen)
+mobile/*.xcodeproj/
+mobile/*.xcworkspace/
+mobile/**/xcuserdata/
+mobile/DerivedData/
+mobile/build/
+.DS_Store
+
+# Build nativo do plugin OBS
+obs/plugin-libobs/build/
+obs/plugin-libobs/out/
+
+# Configurações locais e segredos (nunca versionar)
+settings.json
+*.corrupt
+*.pfx
+*.p12
+*.key
+.env
+.env.*
+
+# Logs
+logs/
+*.jsonl

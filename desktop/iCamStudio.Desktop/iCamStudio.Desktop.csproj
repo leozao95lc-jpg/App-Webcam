@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    iCamStudio Desktop — aplicativo WPF (Windows 10 1809+ / Windows 11).
+    EnableWindowsTargeting permite restaurar e compilar em Linux para validação de código.
+    A execução real (WPF, Media Foundation, câmera virtual) exige Windows.
+  -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <!-- Windows 10 2004 (19041) como alvo: base para Media Foundation/D3D11 atual e câmera virtual MF no Windows 11. -->
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>iCamStudio.Desktop</RootNamespace>
+    <AssemblyName>iCamStudio4K</AssemblyName>
+    <ApplicationTitle>iCam Studio 4K</ApplicationTitle>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>false</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <LangVersion>latest</LangVersion>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <SelfContained>false</SelfContained>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System.IO" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\iCamStudio.Core.csproj" />
+  </ItemGroup>
+
+</Project>

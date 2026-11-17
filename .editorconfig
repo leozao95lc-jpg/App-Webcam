@@ -1,0 +1,21 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+
+[*.{cs,xaml}]
+indent_size = 4
+dotnet_sort_system_directives_first = true
+
+[*.{swift}]
+indent_size = 4
+
+[*.{json,yml,yaml,md,csproj,props,targets,slnx}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
