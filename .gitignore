@@ -1,0 +1,27 @@
+node_modules/
+dist/
+dist-electron/
+dist-renderer/
+out/
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+# Go
+signaling-server/bin/
+signaling-server/certs/
+*.exe
+
+# Segredos e certificados locais (nunca versionar)
+certs/
+*.key
+*.pem
+*.p12
+*.crt
+.env
+.env.*
+settings.json
+
+# Relatórios exportados pelo PWA
+icam-compatibilidade-*.json

@@ -1,0 +1,58 @@
+# CI da stack atual (Go + PWA + Electron). Não exige Mac nem conta Apple.
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  server-and-web:
+    name: Go + PWA (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Go vet e testes
+        working-directory: signaling-server
+        run: |
+          go vet ./...
+          go test ./...
+      - name: npm ci
+        run: npm ci
+      - name: PWA typecheck, testes e build
+        run: |
+          npm run typecheck -w @icam/mobile-pwa
+          npm test -w @icam/mobile-pwa
+          npm run build -w @icam/mobile-pwa
+      - name: Desktop typecheck e build
+        run: npm run build -w @icam/desktop
+
+  windows-desktop:
+    name: Desktop (Windows) — build e Go
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: npm ci
+        run: npm ci
+      - name: Build do PWA e do Desktop
+        run: |
+          npm run build -w @icam/mobile-pwa
+          npm run build -w @icam/desktop
+      - name: Go test no Windows
+        working-directory: signaling-server
+        run: go test ./...

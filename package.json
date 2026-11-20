@@ -1,0 +1,21 @@
+{
+  "name": "icam-studio-4k",
+  "private": true,
+  "description": "iCam Studio 4K: iPhone (PWA no Safari) como webcam 4K para Windows e OBS",
+  "workspaces": [
+    "packages/shared-types",
+    "apps/mobile-pwa",
+    "desktop"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.1"
+  }
+}
